@@ -1,0 +1,14 @@
+{
+  "name": "interactions",
+  "private": true,
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "author": "Jamie McClymont <jamie.mcclymont@gmail.com>",
+  "license": "GPL-3.0",
+  "devDependencies": {
+    "@types/gapi": "0.0.30",
+    "@types/gapi.auth2": "0.0.32",
+    "@types/whatwg-fetch": "0.0.33"
+  }
+}

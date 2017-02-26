@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Video Recorder</title>
+
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+		<script src="https://apis.google.com/js/api.js" crossorigin="anonymous"></script>
+		<link rel="stylesheet" href="bootstrap.min.css">
+		<link rel="stylesheet" href="style.css">
+	</head>
+	<body>
+		<div class="container mycontainer">
+			<div class="steps">
+				<div class="card" id="step-sign-in">
+					<h4 class="card-header">Sign in</h4>
+					<div class="card-block">
+						<p class="card-text">You must sign in to your school account, so your teacher can access your recording through Google Drive.</p>
+
+						<div class="w-100 text-right">
+							<a href="#" id="sign-in-submit" class="btn btn-primary chevron signinlink" onclick="gapi.auth2.getAuthInstance().signIn();return false;" >Sign in with Google</a>
+						</div>
+					</div>
+				</div>
+
+
+				<div class="card" id="step-give-permissions">
+					<h4 class="card-header">Allow camera/microphone access</h4>
+					<div class="card-block">
+						<p class="card-text">
+							A popup should appear in the top-left of your screen &ndash; click "allow".
+						</p>
+					</div>
+				</div>
+
+
+				<div class="card" id="step-give-name">
+					<h4 class="card-header">Name your recording</h4>
+					<div class="card-block">
+						<p class="card-text">The name of your recording should make clear what it will be, and who will be in it, <strong>eg. <em>Lucy and Sophie's Interaction 3</em></strong>.</p>
+
+						<form id="name-form" action="">
+							<div class="input-and-button">
+								<input class="form-control" id="name-input" type="text" placeholder="Recording name" />
+								<button class="btn btn-primary chevron" id="name-submit" disabled type="submit">Submit</button>
+							</div>
+						</form>
+					</div>
+				</div>
+
+
+				<div class="card" id="step-test-input">
+					<h4 class="card-header">Test your input</h4>
+					<div class="card-block">
+						Please ensure that:
+						<ol>
+							<li>
+								Your voice registers on this bar:
+								<div class="progress" style="width: 350px; max-width: 100%;">
+									<div class="progress-bar bg-success" id="test-meter" role="progressbar"></div>
+								</div>
+							</li>
+							<li>
+								You can see yourself below:
+							</li>
+							<video class="liveview" id="test-liveview" muted style="width: 100%; max-width: 300px;"></video>
+						</ol>
+						<form id="test-form" class="w-100 text-right" >
+							<button class="btn btn-primary chevron" type="submit" id="test-submit">Looks good</button>
+						</form>
+					</div>
+				</div>
+
+
+				<div class="card" id="step-record">
+					<h4 class="card-header"><span class="record-icon" style="/*vertical-align: text-bottom*/"></span> Record video</h4>
+					<div class="liveview-overlay-wrapper">
+						<video class="liveview card-img-top w-100" id="record-liveview" muted></video>
+						<div class="liveview-overlay fade-at-countdown-end"></div>
+
+						<div class="liveview-overlay-content-wrapper fade-at-countdown-end">
+							<div class="countdown-inner">
+								<form id="record-start-form">
+									<button class="btn btn-danger btn-lg chevron" type="submit" id="record-start-submit">Start Recording</button>
+								</form>
+								<div>
+									<h1 class="countdown-number">3</h1>
+								</div>
+								<div>
+									<h1 class="countdown-number">2</h1>
+								</div>
+								<div>
+									<h1 class="countdown-number">1</h1>
+								</div>
+								<div>
+									<h1 class="countdown-number">Go!</h1>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="card-block">
+						<form id="record-form" class="w-100 text-right" >
+							<span class="recording-timer-outer">Recorded for <span class="recording-timer">0:00</span></span> <button class="btn btn-primary chevron" disabled type="submit" id="record-submit">Stop and upload</button>
+						</form>
+					</div>
+				</div>
+
+
+				<div class="card" id="step-finalise-upload">
+					<h4 class="card-header">Finish upload</h4>
+					<div class="card-block">
+						<div class="alert alert-warning">
+							<strong>Hold on!</strong> Please do not close this page until the upload completes:
+						</div>
+
+						<div class="progress">
+							<div id="progress-meter" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"></div>
+						</div>
+					</div>
+				</div>
+
+
+				<div class="card" id="step-success">
+					<h4 class="card-header">Done</h4>
+					<div class="card-block">
+						<div class="alert alert-success">
+							<strong>Success!</strong> Your video has been uploaded to Google Drive. <span class="only-if-folder-not-specified">It is not in any folder: you may wish to open Google Drive now and move it into place.</span>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+		<script src="main.js"></script>
+	</body>
+</html>

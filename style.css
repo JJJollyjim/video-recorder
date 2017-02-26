@@ -1,0 +1,136 @@
+
+video {
+	/* width: 100%; */
+}
+
+body {
+	padding-top: 20px;
+}
+
+.container.mycontainer {
+	max-width: 700px;
+}
+
+.chevron::after {
+	content: " \BB";
+}
+
+.steps>div {
+	display: none;
+}
+
+.input-and-button {
+	display: flex;
+}
+
+.input-and-button > input {
+	margin-right: 15px;
+}
+
+@keyframes red-pulse {
+	0% {
+		background: rgb(201, 48, 44);
+	}
+
+	100% {
+		background: rgb(217, 83, 79);
+	}
+}
+
+.record-icon {
+	width: 0.75em;
+	height: 0.75em;
+	border-radius: 50%;
+	display: inline-block;
+	opacity: 0;
+	animation: red-pulse 2s ease-in-out 0s alternate infinite none running;
+	transition: opacity 0s linear 3s;
+}
+
+.counting .record-icon {
+	opacity: 1;
+}
+
+.recording-timer-outer {
+	transition: opacity 0.5s ease-in 3s;
+	opacity: 0;
+}
+
+.counting .recording-timer-outer {
+	opacity: 1;
+}
+
+* > .liveview-overlay-wrapper {
+	position: relative;
+	line-height: 0;
+}
+
+.liveview-overlay {
+	width: 100%;
+	height: 100%;
+	background: black;
+	opacity: 0.5;
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+.liveview-overlay-content-wrapper {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+
+	overflow: hidden;
+}
+
+.liveview-overlay-wrapper {
+	overflow: hidden;
+}
+
+.countdown-number {
+	color: white;
+	display: block;
+}
+
+.countdown-inner {
+	transform: translate(0, 0);
+	height: 100%;
+	text-align: center;
+	transition: transform 4s steps(4, start);
+}
+
+.countdown-inner > * {
+	width: 100%;
+	height: 100%;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.counting .countdown-inner {
+	transform: translate(0, -400%);
+	animation: countdown-fade 1s ease-in 3;
+}
+
+.fade-at-countdown-end {
+	transition: opacity 0.5s ease-in 3s;
+}
+
+.counting .fade-at-countdown-end {
+	opacity: 0;
+}
+
+@keyframes countdown-fade {
+	0% {
+		opacity: 1;
+	}
+	90% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 0;
+	}
+}
