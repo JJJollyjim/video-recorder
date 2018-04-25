@@ -7,7 +7,7 @@ const config = {
 };
 
 declare const MediaRecorder: any;
-declare const URLSearchParams: any;
+declare const gapi: any;
 
 const $ = document.querySelector.bind(document);
 const $$ = document.querySelectorAll.bind(document);
@@ -151,7 +151,7 @@ function statusText(text: string) {
 function setupPreview(media: MediaStream, elem: HTMLVideoElement): () => void {
 	// liveview.onerror = (e) => console.error(e);
 
-	elem.src = URL.createObjectURL(media);
+	elem.srcObject = media;
 	elem.play();
 
 	return function cancelPreview() {
@@ -248,7 +248,7 @@ function initGoogleAuthLib(options: {}) {
 	return new Promise((res, rej) => {
 		gapi.auth2.init(options).then(
 			() => res(),
-			(e) => rej(e)
+			(e: any) => rej(e)
 		);
 	});
 }

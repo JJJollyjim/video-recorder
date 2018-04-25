@@ -4,6 +4,6 @@
 		"lib": ["ES5", "DOM", "DOM.Iterable", "ES2015.Iterable", "ES2015.Symbol", "ScriptHost", "ES2015.Promise"],
 		"target": "ES5",
 		"noImplicitAny": true,
-		"strictNullChecks": true
+		"strictNullChecks": false
 	}
 }
