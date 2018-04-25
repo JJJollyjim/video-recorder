@@ -50,7 +50,7 @@ interface String {
 	repeat(count: number): string;
 }
 
-if (!MediaRecorder) {
+if (typeof MediaRecorder === "undefined") {
 	alert("Your browser is not able to record video. Please use Chrome or Firefox on a computer, or the Camera app on your phone.");
 }
 
@@ -107,7 +107,7 @@ function promiseTimeout(n: number): PromiseLike<any> {
 
 interface CreationState {
 	action: string;
-	folderId: string;
+	folderId?: string;
 	userId: string;
 };
 
@@ -115,10 +115,12 @@ interface CreationState {
 const urlParams = new URLSearchParams(location.search);
 let creationState: CreationState | undefined = undefined;
 if (urlParams.has("state")) {
-	creationState = JSON.parse(urlParams.get("state"));
+	creationState = JSON.parse(urlParams.get("state")!);
 
-	for (let elem of $$(".only-if-folder-not-specified")) {
-		elem.style.display = "none";
+	if (creationState!.folderId != null) {
+		for (let elem of $$(".only-if-folder-not-specified")) {
+			elem.style.display = "none";
+		}
 	}
 } else {
 	for (let elem of $$(".only-if-folder-not-specified")) {
@@ -305,7 +307,8 @@ function recordAndUpload(media: MediaStream) {
 		const data = {
 			name: $("#name-input").value,
 			mimeType: uploadState.mimeType,
-			parents: creationState ? [creationState.folderId] : []
+			// Defying docs, google sometimes sends state without a folderId!
+			parents: (creationState && creationState.folderId) ? [creationState.folderId] : []
 		};
 
 		let prom = fetch("https://www.googleapis.com/upload/drive/v3/files?uploadType=resumable", {
