@@ -302,7 +302,7 @@ function recordAndUpload(media: MediaStream) {
 		console.log("Initiating upload");
 
 		uploadState.networkBusy = true;
-		uploadState.mimeType = firstChunk.type;
+		uploadState.mimeType = firstChunk.type.split(";")[0];
 
 		const data = {
 			name: $("#name-input").value,
