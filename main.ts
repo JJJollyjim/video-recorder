@@ -95,7 +95,6 @@ let showStep = (() => {
 	};
 })();
 
-const ctx = new AudioContext();
 
 
 function promiseTimeout(n: number): PromiseLike<any> {
@@ -161,6 +160,8 @@ function setupPreview(media: MediaStream, elem: HTMLVideoElement): () => void {
 }
 
 function setupVU(media: MediaStream, elem: HTMLElement) {
+	const ctx = new AudioContext();
+
 	const sourceNode = ctx.createMediaStreamSource(media);
 	const analyserNode = ctx.createAnalyser();
 	const array =  new Uint8Array(analyserNode.frequencyBinCount);
