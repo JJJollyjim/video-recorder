@@ -25,7 +25,7 @@ stdenv.mkDerivation rec {
     mkdir -p $out
     cp index.html $out/
     cp style.css $out/
-    cp main.js $out/
+    cp main.js $out/main-recache.js
     cp bootstrap.min.css $out/
   '';
 }
