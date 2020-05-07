@@ -8,6 +8,7 @@ const config = {
 
 declare const MediaRecorder: any;
 declare const gapi: any;
+declare const kwiius_reportError: any;
 
 const $ = document.querySelector.bind(document);
 const $$ = document.querySelectorAll.bind(document);
@@ -500,4 +501,9 @@ loadGoogleAuthLib()
 		showStep(Step.success);
 	})
 
-	.catch((e) => console.error(e));
+	.catch(
+		(e) => {
+			kwiius_reportError("promiseCaughtError", e);
+			console.error(e);
+		}
+	);
