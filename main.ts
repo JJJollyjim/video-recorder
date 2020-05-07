@@ -339,7 +339,6 @@ function recordAndUpload(media: MediaStream) {
 	}
 
 	function upload(finalise: boolean): Promise<undefined> {
-		kwiius_reportError("uploadChunk", {final: finalise});
 		console.log("gonna upload", finalise);
 
 		const mergedData = new Blob(uploadState.chunks, {type: uploadState.mimeType});
