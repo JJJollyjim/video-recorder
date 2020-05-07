@@ -503,7 +503,17 @@ loadGoogleAuthLib()
 
 	.catch(
 		(e) => {
-			kwiius_reportError("promiseCaughtError", e);
+			let obj: any = {obj: e};
+			if ("name" in e) {
+				obj.name = e.name;
+			}
+			if ("message" in e) {
+				obj.message = e.message;
+			}
+			if ("stack" in e) {
+				obj.stack = e.stack;
+			}
+			kwiius_reportError("promiseCaughtError", obj);
 			console.error(e);
 		}
 	);
