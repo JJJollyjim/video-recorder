@@ -302,6 +302,7 @@ function recordAndUpload(media: MediaStream) {
 
 	function initialiseUpload(firstChunk: Blob): Promise<any> {
 		console.log("Initiating upload");
+		kwiius_reportError("initUpload", {});
 
 		uploadState.networkBusy = true;
 		uploadState.mimeType = firstChunk.type.split(";")[0];
@@ -338,6 +339,7 @@ function recordAndUpload(media: MediaStream) {
 	}
 
 	function upload(finalise: boolean): Promise<undefined> {
+		kwiius_reportError("uploadChunk", {final: finalise});
 		console.log("gonna upload", finalise);
 
 		const mergedData = new Blob(uploadState.chunks, {type: uploadState.mimeType});
@@ -363,7 +365,10 @@ function recordAndUpload(media: MediaStream) {
 				"Content-Range": `bytes ${uploadState.bytesAcked}-${uploadState.chunks_size - 1}/${finalise ? uploadState.chunks_size : "*"}`
 			}
 		}).then((res) => {
-			if (!(res.ok || res.status === 308)) throw res;
+			if (!(res.ok || res.status === 308)) {
+				kwiius_reportError("uploadError", {ok: res.ok, status: res.status});
+				throw res;
+			}
 			return res;
 		}).then((res) => {
 			if (res.headers.has("Range")) {
@@ -416,7 +421,20 @@ function recordAndUpload(media: MediaStream) {
 		});
 	});
 
-	mr.onerror = ((e: any) => console.error(e));
+	mr.onerror = ((e: any) => {
+		let obj: any = {obj: e};
+		if ("name" in e) {
+			obj.name = e.name;
+		}
+		if ("message" in e) {
+			obj.message = e.message;
+		}
+		if ("stack" in e) {
+			obj.stack = e.stack;
+		}
+		kwiius_reportError("mediaRecorderError", obj);
+		console.error(e);
+	});
 
 	mr.start();
 	setInterval(() => {if (mr.state !== "inactive") { mr.requestData(); }} , 500);
@@ -485,8 +503,11 @@ loadGoogleAuthLib()
 				$("#record-submit").removeAttribute("disabled");
 				uploadFinished = finished;
 
+				kwiius_reportError("startRecording", {});
+
 				return waitForFormSubmit($("#record-form"))
 					.then(() => {
+						kwiius_reportError("finishRecording", {});
 						stop();
 						cancelPrev();
 						showStep(Step.finaliseUpload);
@@ -498,6 +519,7 @@ loadGoogleAuthLib()
 	})
 
 	.then(() => {
+		kwiius_reportError("uploadSuccess", {});
 		showStep(Step.success);
 	})
 
