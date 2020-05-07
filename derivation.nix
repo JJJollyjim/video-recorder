@@ -1,4 +1,4 @@
-{ pkgs, stdenv, ... }:
+{ pkgs, stdenv, extraJS ? "", ... }:
 stdenv.mkDerivation rec {
   name = "video-recorder";
 
@@ -9,6 +9,14 @@ stdenv.mkDerivation rec {
   buildPhase = ''
     tsc
   '';
+
+  inherit extraJS;
+
+  preInstallPhases = [ "extraJSPhase" ];
+  extraJSPhase = ''
+    cat $extraJS main.js > combined.js
+    mv combined.js main.js
+    '';
 
   installPhase = ''
     mkdir -p $out
