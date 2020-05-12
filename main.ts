@@ -282,8 +282,7 @@ function getMediaPermissions() {
 		// video: true
 		video: {
 			facingMode: "user",
-			width: {max: 854},
-			height: {max: 480}
+			height: {ideal: 480}
 		}
 	});
 }
