@@ -7,7 +7,6 @@ const config = {
 };
 
 declare const MediaRecorder: any;
-declare const webkitAudioContext: { new (contextOptions?: AudioContextOptions): AudioContext; prototype: AudioContext; };
 declare const gapi: any;
 declare const kwiius_reportError: any;
 
@@ -162,7 +161,7 @@ function setupPreview(media: MediaStream, elem: HTMLVideoElement): () => void {
 }
 
 function setupVU(media: MediaStream, elem: HTMLElement) {
-	const ac = AudioContext || webkitAudioContext;
+	const ac = window.AudioContext || (<any>window).webkitAudioContext;
 	const ctx = new ac();
 
 	const sourceNode = ctx.createMediaStreamSource(media);
