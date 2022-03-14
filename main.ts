@@ -6,7 +6,6 @@ const config = {
 	chunk_size: 5 * 1024 * 1024
 };
 
-declare const MediaRecorder: any;
 declare const gapi: any;
 declare const kwiius_reportError: any;
 
@@ -247,7 +246,7 @@ function loadGoogleAuthLib() {
 	});
 }
 
-function initGoogleAuthLib(options: {}) {
+function initGoogleAuthLib(options: {}): Promise<void> {
 	return new Promise((res, rej) => {
 		gapi.auth2.init(options).then(
 			() => res(),
@@ -256,7 +255,7 @@ function initGoogleAuthLib(options: {}) {
 	});
 }
 
-function waitForSignIn() {
+function waitForSignIn(): Promise<void> {
 	return new Promise((resolve, reject) => {
 		const iss = gapi.auth2.getAuthInstance().isSignedIn;
 
@@ -269,7 +268,7 @@ function waitForSignIn() {
 	});
 }
 
-function waitForFormSubmit(elem: HTMLElement) {
+function waitForFormSubmit(elem: HTMLElement): Promise<void> {
 	return new Promise((resolve, reject) => {
 		elem.addEventListener("submit", (ev: Event) => {resolve(); ev.preventDefault(); });
 	});
